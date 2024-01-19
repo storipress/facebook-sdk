@@ -1,0 +1,23 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: max
+
+    parallel:
+        maximumNumberOfProcesses: 4
+
+    paths:
+        - src
+        - tests
+
+    ignoreErrors:
+        -
+          message: '#Undefined variable\: \$this#'
+          reportUnmatched: false
+          paths:
+            - tests/*
+        -
+          message: '#Call to an undefined method Pest\\PendingCalls\\TestCall\|Pest\\Support\\HigherOrderTapProxy\:\:.+?\.#'
+          paths:
+            - tests/*
