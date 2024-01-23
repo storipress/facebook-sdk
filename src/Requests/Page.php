@@ -48,6 +48,8 @@ class Page extends Request
     /**
      * @param  array<string, string>  $options
      * @return array<int, SearchPage>
+     *
+     * @link https://developers.facebook.com/docs/pages-api/search-pages
      */
     public function search(string $keyword, array $options = []): array
     {

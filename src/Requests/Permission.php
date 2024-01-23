@@ -22,6 +22,8 @@ class Permission extends Request
      *     data: array<int, PermissionObject>,
      *     paging: CursorPagination,
      * }
+     *
+     * @link https://developers.facebook.com/docs/graph-api/reference/user/permissions
      */
     public function list(string $userId, array $options = []): array
     {
@@ -39,6 +41,26 @@ class Permission extends Request
                 new stdClass(),
             ),
         ];
+    }
+
+    /**
+     * @link https://developers.facebook.com/docs/graph-api/reference/user/permissions
+     * @link https://developers.facebook.com/docs/facebook-login/guides/permissions/request-revoke/#revoking
+     */
+    public function delete(string $userId, ?string $permission = null): bool
+    {
+        $path = sprintf('/%s/permissions', $userId);
+
+        if (! empty($permission)) {
+            $path = sprintf('/%s/%s', $path, $permission);
+        }
+
+        $data = $this->request(
+            'delete',
+            $path,
+        );
+
+        return $data->success;
     }
 
     /**
