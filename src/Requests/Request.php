@@ -16,7 +16,7 @@ abstract class Request
 {
     const ENDPOINT = 'https://graph.facebook.com';
 
-    const VERSION = 'v18.0';
+    const VERSION = 'v16.0';
 
     /**
      * Create a new request instance.
