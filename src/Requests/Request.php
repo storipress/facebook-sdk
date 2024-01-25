@@ -8,6 +8,7 @@ use Illuminate\Http\Client\Response;
 use stdClass;
 use Storipress\Facebook\Exceptions\ExpiredAccessToken;
 use Storipress\Facebook\Exceptions\MissingAccessToken;
+use Storipress\Facebook\Exceptions\MissingPermission;
 use Storipress\Facebook\Exceptions\UnexpectedResponseData;
 use Storipress\Facebook\Exceptions\UnknownError;
 use Storipress\Facebook\Facebook;
@@ -102,12 +103,22 @@ abstract class Request
      */
     public function error(Response $response): void
     {
-        throw match ($response->json('error.code')) {
-            190 => new ExpiredAccessToken(),
+        $message = $response->json('error.message');
 
-            2500 => new MissingAccessToken(),
+        $code = $response->json('error.code');
 
-            default => new UnknownError(),
+        if (! is_string($message) || empty($message)) {
+            $message = $response->body();
+        }
+
+        throw match ($code) {
+            190 => new ExpiredAccessToken($message, $code),
+
+            200 => new MissingPermission($message, $code),
+
+            2500 => new MissingAccessToken($message, $code),
+
+            default => new UnknownError($response->body()),
         };
     }
 }
