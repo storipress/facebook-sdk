@@ -3,8 +3,7 @@ name: Testing
 on:
   push:
   schedule:
-    # run tests on every week Monday
-    - cron: '0 0 * * 1'
+    - cron: '0 0 * * 1' # run tests on every week Monday
 
 jobs:
   static_analyze:
