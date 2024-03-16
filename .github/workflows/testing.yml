@@ -52,7 +52,7 @@ jobs:
         run: vendor/bin/pest --memory-limit=-1 --type-coverage --min=90
 
   testing:
-    name: Laravel ${{ matrix.laravel }} (${{ matrix.php }}
+    name: Laravel ${{ matrix.laravel }} (${{ matrix.php }})
 
     runs-on: ubuntu-latest
 
